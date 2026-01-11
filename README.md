@@ -77,6 +77,8 @@ Operator commands are validated based on the current system state to ensure safe
 - Invalid actions are blocked and communicated via HMI messages
 - The Stop command is always available as a high-priority safety function
 
+![HMI Ekranı](
+)
 ---
 
 ### Mode-Dependent Control Logic
