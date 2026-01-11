@@ -67,6 +67,7 @@ This structure improves readability, safety, and future scalability.
 ## HMI Design & Operator Interaction
 The HMI acts as an **operator interface**, rather than a direct actuator controller.  
 Operator commands are validated based on the current system state to ensure safe interaction.
+![HMI Ekranı](images/hmi_screen.png)
 
 ---
 
