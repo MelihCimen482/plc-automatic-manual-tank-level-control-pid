@@ -1,120 +1,143 @@
 # PLC-Based Automatic / Manual Tank Level Control with PID
 
-## Project Overview
-This project is a PLC-based liquid tank level control system designed with **manual and automatic operating modes**.  
-The system focuses on **safe operation**, **clear mode separation**, and **industrial-style control logic**.
+## Project Description
+This project is a PLC-based liquid tank level control application with **manual** and **automatic** operating modes.  
+The system is designed with a focus on **safe operation**, **clear mode separation**, and **predictable control behavior**.
 
-The project was developed using **Siemens TIA Portal** and includes manual control, PID-based automatic level regulation, stop logic, and HMI interaction.
+The project was developed using **Siemens TIA Portal** and demonstrates practical PLC programming, PID-based level control, and operator-oriented HMI design.
 
 ---
 
-## System Operating Modes
+## Functional Overview
 
 ### Manual Mode
-- **Fill (Doldur)** button starts manual filling.
-- **Drain (Boşalt)** button starts manual draining.
-- Filling and draining cannot be active at the same time.
-- **Stop** immediately stops the process.
-- After Stop, a new operator command is required to restart the system.
+In manual mode, the operator directly controls the process:
 
-This behavior prevents unintended restarts and ensures operator safety.
+- **Fill (Doldur)** starts tank filling
+- **Drain (Boşalt)** starts tank draining
+- Filling and draining cannot be active at the same time
+- **Stop** immediately halts all active operations
+- After Stop, a new operator command is required to restart
+
+This prevents unintended restarts and conflicting actuator commands.
 
 ---
 
 ### Automatic Mode
-- Pressing the **Fill (Doldur)** button enables **PID level control**.
-- The PID controller regulates the tank level automatically.
-- **Drain button has no effect** in automatic mode.
-- Pressing **Stop** disables the PID controller and stops the system safely.
+Automatic mode enables closed-loop level control:
 
-PID control is active **only in automatic mode**.
+- **Fill (Doldur)** activates PID-based level control
+- Tank level is regulated to the defined setpoint
+- **Drain** command is disabled in this mode
+- **Stop** disables the PID controller and safely stops the system
+
+PID control is active only in automatic mode to avoid control conflicts.
 
 ---
 
-## Mode Change & Safety Concept
-- Mode changes are **not allowed while the system is active** (manual operation or PID control).
-- If a mode change is requested while the system is running:
+## Mode Transition Logic
+Mode transitions are strictly controlled to ensure safe operation:
+
+- Mode changes are not allowed while the system is active
+- If a mode change is requested during operation:
   - The system is forced into **Stop state**
   - A warning message is displayed on the HMI
-- Mode changes are only allowed when the system is in **Stop condition**.
+- Mode selection is only permitted when the system is stopped
 
-This approach prevents unsafe transitions and unexpected actuator behavior.
-
----
-
-## HMI Design
-The HMI is designed with a clear separation between **system operation** and **process analysis**.  
-All HMI texts are displayed in **Turkish**, considering local operator usage, while the control logic remains language-independent.
-
-### Main Control Screen
-The main screen is used for **direct operator control** and real-time monitoring.
-
-- Manual / Automatic mode selection via selector switch
-- **Fill (Doldur)** and **Drain (Boşalt)** buttons for manual operation
-- High-priority **Stop** button that safely stops the system and resets active states
-- Real-time display of valve opening percentages, tank level setpoint, and current level
-- Context-based status and warning messages for safe operation
-
-The screen prevents conflicting commands and provides clear feedback to the operator.
-
-### Level Analysis Screen
-The analysis screen is dedicated to **monitoring system behavior** without affecting control.
-
-- Real-time tank level trend visualization
-- Observation of PID response and level stability over time
-- Simple layout for fast interpretation
-
-### Design Approach
-- Separation of control and analysis functions
-- Operator-oriented and safety-focused design
-- Clear visualization of critical process variables
+This approach prevents unsafe state transitions and unexpected process behavior.
 
 ---
 
-## Control Logic Architecture
-- State-based control structure:
-  - STOP
-  - MANUAL
-  - AUTOMATIC
-- Manual and automatic control paths are separated to avoid conflicts.
-- All physical outputs are conditioned through internal memory bits for safe shutdown behavior.
+## Control Architecture
+The control logic follows a **state-based structure**:
+
+- STOP  
+- MANUAL  
+- AUTOMATIC  
+
+Key design principles:
+- Manual and automatic logic paths are clearly separated
+- Physical outputs are driven through internal memory states
+- All outputs are deactivated in Stop condition
+
+This structure improves readability, safety, and future scalability.
 
 ---
 
-## Technical Design Decisions
+## HMI Design & Operator Interaction
+The HMI acts as an **operator interface**, rather than a direct actuator controller.  
+Operator commands are validated based on the current system state to ensure safe interaction.
+
+---
+
+### Control & Safety Interaction
+- Operator actions are evaluated according to the active operating mode
+- Invalid actions are blocked and communicated via HMI messages
+- The Stop command is always available as a high-priority safety function
+
+---
+
+### Mode-Dependent Control Logic
+HMI control elements are enabled or restricted based on system state:
+
+- Manual control buttons are disabled during automatic PID operation
+- Automatic control commands are unavailable in manual mode
+- Mode selection is only possible when the system is in Stop condition
+
+This reduces operator error and prevents conflicting commands.
+
+---
+
+### Process Visualization
+The HMI provides real-time visualization of key process variables:
+
+- Tank level feedback
+- Level setpoint
+- Valve opening percentages
+- System operating status
+
+A separate analysis screen displays tank level trends, allowing observation of PID response and overall system behavior.
+
+
+## Technical Implementation Details
 
 ### Analog Signal Processing
-- The tank level sensor provides a **0–10V analog signal**.
-- The analog input module converts this signal to a **0–27648 integer value**.
-- This value is used as the process variable for PID control.
-
-### PID Execution
-- The PID controller is executed inside a **cyclic interrupt OB**.
-- This ensures a constant execution time, which is critical for stable PID behavior.
-
-### PID Safety Handling
-- On **Stop condition**, the PID controller is disabled.
-- This prevents integral wind-up and ensures smooth restart behavior.
+- Tank level sensor outputs a **0–10V analog signal**
+- The analog input module converts this signal to a **0–27648 integer value**
+- This value is used as the process variable for PID control
 
 ---
 
-## Used Technologies
-- Siemens TIA Portal
-- Siemens PLC
-- PID Compact Controller
-- SIMATIC HMI
-- Cyclic Interrupt OB
+### PID Controller Execution
+- PID control is executed inside a **cyclic interrupt organization block**
+- Constant execution timing ensures stable and predictable PID behavior
+
+---
+
+### PID Safety Handling
+- The PID controller is disabled when the system enters Stop state
+- This prevents integral wind-up and ensures smooth restart behavior
+
+---
+
+## Tools & Technologies
+- Siemens TIA Portal  
+- Siemens PLC  
+- SIMATIC HMI  
+- PID Compact Controller  
+- Cyclic Interrupt OB  
 
 ---
 
 ## Project Purpose
-This project was created as a **portfolio and reference application** to demonstrate:
+This project was developed as a **technical portfolio application** to demonstrate:
+
 - Safe manual and automatic control logic
-- Proper PID integration
+- Proper PID integration with deterministic execution
 - Industrial-style mode handling
-- Operator-oriented HMI design
+- Practical HMI design for operator interaction
 
 ---
 
 ## License
-This project is intended for educational and portfolio purposes.
+This project is intended for educational and portfolio demonstration purposes.
