@@ -67,6 +67,7 @@ This structure improves readability, safety, and future scalability.
 ## HMI Design & Operator Interaction
 The HMI acts as an **operator interface**, rather than a direct actuator controller.  
 Operator commands are validated based on the current system state to ensure safe interaction.
+
 ![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20151057.png
 )
 
@@ -77,8 +78,7 @@ Operator commands are validated based on the current system state to ensure safe
 - Invalid actions are blocked and communicated via HMI messages
 - The Stop command is always available as a high-priority safety function
 
-![HMI Ekranı](
-)
+![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20151136.png)
 ---
 
 ### Mode-Dependent Control Logic
@@ -102,6 +102,8 @@ The HMI provides real-time visualization of key process variables:
 
 A separate analysis screen displays tank level trends, allowing observation of PID response and overall system behavior.
 
+![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20150835.png)
+
 
 ## Technical Implementation Details
 
@@ -110,12 +112,15 @@ A separate analysis screen displays tank level trends, allowing observation of P
 - The analog input module converts this signal to a **0–27648 integer value**
 - This value is used as the process variable for PID control
 
+![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20135507.png)
 ---
 
 ### PID Controller Execution
 - PID control is executed inside a **cyclic interrupt organization block**
 - Constant execution timing ensures stable and predictable PID behavior
-
+  
+![PID Control](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20145526.png
+)
 ---
 
 ### PID Safety Handling
