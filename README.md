@@ -77,6 +77,7 @@ Operator commands are validated based on the current system state to ensure safe
 - Invalid actions are blocked and communicated via HMI messages
 - The Stop command is always available as a high-priority safety function
 
+![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/9654d6df7347f2bf315d9c5c38e403c0c20f02c1/Animation_8.gif)
 ---
 
 ### Mode-Dependent Control Logic
