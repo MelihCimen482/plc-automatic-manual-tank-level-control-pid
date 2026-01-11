@@ -67,6 +67,8 @@ This structure improves readability, safety, and future scalability.
 ## HMI Design & Operator Interaction
 The HMI acts as an **operator interface**, rather than a direct actuator controller.  
 Operator commands are validated based on the current system state to ensure safe interaction.
+![HMI Ekranı](https://github.com/MelihCimen482/plc-automatic-manual-tank-level-control-pid/blob/22520eaa7ec4f3e06735c3ee9265358332a3add8/Images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-01-11%20151057.png
+)
 
 ---
 
